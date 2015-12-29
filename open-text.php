@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: My SEO текст
-Description: Шорткод для добавления раскрывающегося текста
+Description: Шорткод для добавления раскрывающегося текста [slidetext minheight="130" btnname="Подробнее"]Текст[/slidetext]
 Author: Dmitriy
 */
 class mySlideText {
@@ -24,7 +24,7 @@ class mySlideText {
 	}
 
 	function mySlideTextScript(){
-		wp_register_script( 'slidetext', plugins_url('open.text.js', __file__));
+		wp_register_script( 'slidetext', plugins_url('open.text.js', __file__), 'jquery', 20151606, true);
 		wp_enqueue_script('slidetext');
 	}
 
