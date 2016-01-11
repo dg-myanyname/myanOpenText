@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: My SEO текст
-Description: Шорткод для добавления раскрывающегося текста [slidetext minheight="130" btnname="Подробнее"]Текст[/slidetext]
+Description: Шорткод для добавления раскрывающегося текста [slidetext minheight="130" btnname="Подробнее" closebtnname="Подробнее"]Текст[/slidetext]
 Author: Dmitriy
 */
 class mySlideText {
@@ -13,13 +13,14 @@ class mySlideText {
 	
 	function slidetext($atts, $content=""){
 		extract( shortcode_atts( array(
-			'btnname' => __('Подробнее'),
+			'btnname' => __('Подробнее', 'myan'),
+			'closebtnname' => __( 'Скрыть', 'myan' ),
 			'minheight' => 130
 		), $atts ) );
 		$html  = '<div class="slide-text-wrapper"><div class="my-open-text" style="overflow: hidden;" min-height="'.$minheight.'">';
 		$html .= apply_filters('the_content', $content);
 		$html .= '</div>';
-		$html .= '<a href="javascript:;" class="my-open-text-btn">'.$btnname.'</a></div>';
+		$html .= '<a href="javascript:;" class="my-open-text-btn" data-closebtnname="'.$closebtnname.'">'.$btnname.'</a></div>';
 		return $html;
 	}
 
