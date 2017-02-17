@@ -25,7 +25,7 @@ class mySlideText {
 	}
 
 	function mySlideTextScript(){
-		wp_register_script( 'slidetext', plugins_url('open.text.js', __file__), 'jquery', 20151606, true);
+		wp_register_script( 'slidetext', plugins_url('open.text.js', __file__), 'jquery', 20170217, true);
 		wp_enqueue_script('slidetext');
 	}
 

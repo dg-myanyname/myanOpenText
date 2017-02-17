@@ -2,14 +2,16 @@
 	$(document).ready(function(){
 		var minHeight = 90,
 			timeOut = 1000;
-		$('.my-open-text').each(function(indx){
-			var customMinHeight = $(this).attr('min-height');
-			if(customMinHeight) minHeight = parseInt(customMinHeight, 10);
-			$(this).attr('full-height', $(this).height());
-			$(this).css('height', minHeight);
-			var btn = $(this).parent('.slide-text-wrapper').find('.my-open-text-btn');
-			if (btn.data('closebtnname')) btn.data('btnName', btn.text());
-		});
+		setTimeout(function() {
+			$('.my-open-text').each(function(indx){
+				var customMinHeight = $(this).attr('min-height');
+				if(customMinHeight) minHeight = parseInt(customMinHeight, 10);
+				$(this).attr('full-height', $(this).height());
+				$(this).css('height', minHeight);
+				var btn = $(this).parent('.slide-text-wrapper').find('.my-open-text-btn');
+				if (btn.data('closebtnname')) btn.data('btnName', btn.text());
+			});
+		}, 100);
 		$('.my-open-text-btn').click(function(){
 			var textCaption = $(this).parents('.slide-text-wrapper').find('.my-open-text');
 			if(textCaption.height() <= minHeight){
