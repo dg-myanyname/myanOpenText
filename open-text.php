@@ -5,10 +5,14 @@ Description: Шорткод для добавления раскрывающег
 Author: Dmitriy
 */
 class mySlideText {
+	
+	static $add_script;
+	
 	function __construct(){
 		add_shortcode( 'slidetext', array(&$this, 'slidetext'));
-		add_action( 'wp_enqueue_scripts', array(&$this, 'mySlideTextScript'));
+		add_action('init', array(&$this, 'mySlideTextScript'));
 		add_action('init', array(&$this, 'open_text_mce_button'));
+		add_action('wp_footer', array(&$this, 'print_script'));
 	}
 	
 	function slidetext($atts, $content=""){
@@ -17,16 +21,18 @@ class mySlideText {
 			'closebtnname' => __( 'Скрыть', 'myan' ),
 			'minheight' => 130
 		), $atts ) );
-		$html  = '<div class="slide-text-wrapper"><div class="my-open-text" style="overflow: hidden;" min-height="'.$minheight.'">';
+		$html  = '<div class="slide-text-wrapper"><div class="my-open-text" min-height="'.$minheight.'">';
 		$html .= apply_filters('the_content', $content);
 		$html .= '</div>';
 		$html .= '<a href="javascript:;" class="my-open-text-btn" data-closebtnname="'.$closebtnname.'">'.$btnname.'</a></div>';
+		if(!self::$add_script)
+			$html .= '<style>.my-open-text{overflow: hidden;}</style>';
+		self::$add_script = 1;
 		return $html;
 	}
 
 	function mySlideTextScript(){
-		wp_register_script( 'slidetext', plugins_url('open.text.js', __file__), 'jquery', 20170217, true);
-		wp_enqueue_script('slidetext');
+		wp_register_script( 'slidetext', plugins_url('open.text.min.js', __file__), 'jquery', 20170217, true);
 	}
 
 	function open_text_mce_button() {
@@ -41,12 +47,14 @@ class mySlideText {
 	}
 
 	function open_text_add_plugin($plugin_array) {
-		//$plugin_array['otsc'] = get_bloginfo('template_url').'/opentext/open.text.timce.js';
 		$plugin_array['otsc'] = plugins_url('open.text.timce.js', __file__);
 		return $plugin_array;
 	}
 
+	function print_script(){
+		if ( ! self::$add_script )
+			return;
+		wp_print_scripts('slidetext');
+	}
 }
-new mySlideText;
-
-?>
+new mySlideText; ?>
