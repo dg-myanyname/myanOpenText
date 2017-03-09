@@ -25,14 +25,13 @@ class mySlideText {
 		$html .= apply_filters('the_content', $content);
 		$html .= '</div>';
 		$html .= '<a href="javascript:;" class="my-open-text-btn" data-closebtnname="'.$closebtnname.'">'.$btnname.'</a></div>';
-		if(!self::$add_script)
-			$html .= '<style>.my-open-text{overflow: hidden;}</style>';
 		self::$add_script = 1;
 		return $html;
 	}
 
 	function mySlideTextScript(){
 		wp_register_script( 'slidetext', plugins_url('open.text.min.js', __file__), 'jquery', 20170217, true);
+		wp_register_style( 'slidetext', plugins_url('open.text.css', __file__) );
 	}
 
 	function open_text_mce_button() {
@@ -55,6 +54,7 @@ class mySlideText {
 		if ( ! self::$add_script )
 			return;
 		wp_print_scripts('slidetext');
+		wp_print_styles('slidetext');
 	}
 }
 new mySlideText; ?>
